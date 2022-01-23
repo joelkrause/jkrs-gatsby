@@ -1,0 +1,84 @@
+html {
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+body,
+html {
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+
+    /* Smoothing */
+    text-rendering: optimizeLegibility;
+    text-shadow: rgba(0, 0, 0, 0.01) 0 0 1px;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin-top: 0;
+}
+
+body,
+ol,
+ul {
+    font-weight: normal;
+    margin: 0;
+    padding: 0;
+}
+
+ol,
+ul {
+    list-style: none;
+}
+
+img {
+    height: auto;
+    max-width: 100%;
+}
+
+a {
+    color: currentColor;
+    text-decoration: none;
+}
+
+button {
+    appearance: none;
+    background: rgba(0, 0, 0, 0);
+    border: 0;
+    color: currentColor;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    margin: 0;
+    outline: 0;
+    padding: 0;
+}
+
+input,
+select,
+textarea {
+    border: 0;
+    border-radius: 0;
+    font-family: inherit;
+    outline: 0;
+}
+
+input {
+    appearance: none;
+    background: rgba(0, 0, 0, 0);
+    border: 0;
+    outline: 0;
+}
+
+select {
+    appearance: none;
+    background: rgba(0, 0, 0, 0);
+}
+
+.position-relative {
+    position: relative;
+    z-index: 2;
+}
