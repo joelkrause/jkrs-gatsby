@@ -2,27 +2,25 @@ import React, { Component } from 'react';
 import {Link} from 'gatsby'
 import styled from "styled-components"
 
-import { breakpoints, colours } from '../styles/styled-components/variables';
+import { breakpoints, colours } from '../../styles/styled-components/variables';
 
 class Header extends Component {
     render() {
         return (
             <HeaderEle>
-                <div className="container">
-                    <Link to="/">
-                        Joel Krause
-                    </Link>
-                    <NavEle>
-                        <NavEleList>
-                            <NavEleListItem>
-                                <Link to="/">Home</Link>
-                            </NavEleListItem>
-                            <NavEleListItem>
-                                <Link to="/posts">Posts</Link>
-                            </NavEleListItem>
-                        </NavEleList>
-                    </NavEle>
-                </div>
+                <Link to="/">
+                    Joel Krause
+                </Link>
+                <NavEle>
+                    <NavEleList>
+                        <NavEleListItem>
+                            <Link to="/">Home</Link>
+                        </NavEleListItem>
+                        <NavEleListItem>
+                            <Link to="/posts">Posts</Link>
+                        </NavEleListItem>
+                    </NavEleList>
+                </NavEle>
             </HeaderEle>
         );
     }
@@ -31,6 +29,9 @@ class Header extends Component {
 export default Header;
 
 const HeaderEle = styled.header`
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
     padding:1rem;
     font-weight: 500;
 
@@ -45,12 +46,7 @@ const HeaderEle = styled.header`
 
     @media (min-width: ${breakpoints.hd}) {
         padding:4rem;
-    }
-    .container{
-        display:flex;
-        justify-content:space-between;
-        align-items:center;
-    }    
+    } 
 `
 
 const NavEle = styled.nav``

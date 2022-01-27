@@ -11,13 +11,17 @@ module.exports = {
       },
     },
     {
-      resolve: 'gatsby-source-storyblok',
+      resolve: `gatsby-source-graphql`,
       options: {
-        accessToken: 'sZUcBEZiCUQNtT3CQAZrzgtt',
-        version: 'draft',
-        // languages: ['de', 'at'] // Optional parameter. Omission will retrieve all languages by default.
-      }
-    }    
+        fieldName: `Storyblok`,
+        typeName: `storyblok`,
+        url: `https://gapi.storyblok.com/v1/api`,
+        headers: {
+          Token: `sZUcBEZiCUQNtT3CQAZrzgtt`,
+          Version: `draft`,
+        },
+      },
+    },
     // {
     //   resolve: "gatsby-plugin-prettier-eslint",
     //   options: {

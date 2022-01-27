@@ -1,9 +1,8 @@
 import React from "react"
-import { globalHistory } from '@reach/router';
 
 import '../styles/app.scss'
 
-import Header from "../components/Header"
+import Header from "../components/global/Header"
 
 const Layout = ({children }) => {
   return (

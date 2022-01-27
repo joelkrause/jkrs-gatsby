@@ -4,11 +4,9 @@ import styled from "styled-components"
 import { breakpoints, colours } from '../styles/styled-components/variables';
  
 import Layout from "../templates/layout"
-import useStoryblok from "../lib/storyblok"
  
 const Page = ({ pageContext, location }) => { 
   let story = pageContext.story
-  story = useStoryblok(story, location)
  
   return (
   <Layout>
@@ -19,7 +17,6 @@ const Page = ({ pageContext, location }) => {
                 <PostExcerpt>Excerpt</PostExcerpt>
             </PostHero>
       </div>
-      <pre>{JSON.stringify(story,null,2)}</pre>
   </Layout>
 )}
  

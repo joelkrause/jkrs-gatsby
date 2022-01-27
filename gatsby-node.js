@@ -1,45 +1,41 @@
 const path = require('path')
- 
- exports.createPages = ({ graphql, actions }) => {
-    const { createPage } = actions
- 
-    return new Promise((resolve, reject) => {
-        const storyblokEntry = path.resolve('src/templates/post.tsx')
-    
-        resolve(
-          graphql(
-            `{
-              stories: allStoryblokEntry(filter: {field_component: {eq: "post"}}) {
-                edges {
-                    node {
-                        name
-                        full_slug
-                        published_at
-                        content
-                    }
-                }
-              }
-            }`
-          ).then(result => {
-            if (result.errors) {
-              console.log(result.errors)
-              reject(result.errors)
-            }
-    
-            const entries = result.data.stories.edges
 
-            entries.forEach((entry) => {
-                console.log(entry.node.name)
-                const page = {
-                    path: `/${entry.node.full_slug}`,
-                    component: storyblokEntry,
-                    context: {
-                        story: entry.node
-                    }
-                }
-                createPage(page)
-            })
-          })
-        )
-      })
- }
+// Create blog pages dynamically
+exports.createPages = async ({ graphql, actions }) => {
+  const { createPage } = actions
+  const blogPostTemplate = path.resolve('src/templates/post.tsx')
+  const result = await graphql(`
+  query Posts {
+    Storyblok {
+      PostItems {
+        items {
+          full_slug
+          name
+          published_at
+          content {
+            body
+            component
+            excerpt
+            likes
+            post_hero
+            post_icon
+            categories {
+              uuid
+              name
+            }            
+          }
+        }
+      }
+    }
+  }
+  `)
+  result.data.Storyblok.PostItems.items.forEach(node => {
+    createPage({
+      path: `${node.full_slug}`,
+      component: blogPostTemplate,
+      context: {
+        story: node
+      },
+    })
+  })
+}
