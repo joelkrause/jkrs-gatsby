@@ -8,20 +8,26 @@ import { breakpoints, colours } from '../../styles/styled-components/variables';
 
 
 const Header: React.FC<PageProps> = () => {
-    const localStorage = window.localStorage
-    const getPreferredColorScheme = () => {
-        if (window.matchMedia) {
-          if(window.matchMedia('(prefers-color-scheme: dark)').matches){
-            return 'dark';
-          } else {
-            return 'light';
-          }
-        }
-        return 'light';
-    }
+    const [theme, setThemeState] = useState('light');
 
-    const initialValue = localStorage.getItem('theme') ? localStorage.getItem('theme') : getPreferredColorScheme()
-    const [theme, setThemeState] = useState(initialValue);
+    useEffect(() => {
+        const localStorage = window.localStorage
+        const getPreferredColorScheme = () => {
+            if (window.matchMedia) {
+              if(window.matchMedia('(prefers-color-scheme: dark)').matches){
+                return 'dark';
+              } else {
+                return 'light';
+              }
+            }
+            return 'light';
+        }
+    
+        const initialValue = localStorage.getItem('theme') ? localStorage.getItem('theme') : getPreferredColorScheme()
+        setThemeState(initialValue)
+        
+        document.documentElement.setAttribute("data-color-scheme", theme);
+    });
     
     const setTheme = () => {
         const currentTheme = localStorage.getItem('theme')
@@ -32,11 +38,7 @@ const Header: React.FC<PageProps> = () => {
             setThemeState('dark')
             localStorage.setItem('theme','dark')
         }
-    }
-
-    useEffect(() => {
-        document.documentElement.setAttribute("data-color-scheme", theme);
-    });
+    }       
 
     return (
         <HeaderEle>
