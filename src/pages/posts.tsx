@@ -1,6 +1,6 @@
 import { PageProps, useStaticQuery, graphql, Link } from 'gatsby';
 import React, {useState} from 'react';
-import PropTypes from "prop-types"
+import _ from 'underscore';
 import styled from 'styled-components'
 
 import Layout from "../templates/layout"
@@ -36,6 +36,12 @@ const PostsPage: React.FC<PageProps> = () => {
     } else {
       return items
     }
+  }
+
+  const groupByYear = (items) => {
+    return _.groupBy(items, function(item) {
+        return new Date(item.published_at).getFullYear();
+    });
   }
 
 const data = useStaticQuery(graphql`
@@ -79,7 +85,7 @@ const data = useStaticQuery(graphql`
         </PostsTitle>
         <PostTags>
         <PostTagsList>
-          {resultsToShow(data.Storyblok.CategoryItems.items).map(node => {
+          {data.Storyblok.CategoryItems.items.map(node => {
             return (
               <PostTagsListItem>
                 <button type="button" onClick={() => setTags(node)} className={activeTags.includes(node.uuid) ? 'active' : ''}>
@@ -101,14 +107,20 @@ const data = useStaticQuery(graphql`
     </PostsHero>
     <PostsGrid>
       <div className="container">
-      {resultsToShow(data.Storyblok.PostItems.items).map(node => {
+      {_.map(groupByYear(resultsToShow(data.Storyblok.PostItems.items)),function(items,year){
+      return (
+        <>
+          <PostYearTitle>{year}</PostYearTitle>
+          {resultsToShow(items).map(node => {
         return (
-          <PostListItem post={node} />
+          <PostListItem post={node} key={node.uuid}/>
         )
       })}
+        </>
+      )
+    })}
       </div>
     </PostsGrid>
-    <pre>{JSON.stringify(activeTags,null,2)}</pre>
   </Layout>
   )
 }
@@ -129,22 +141,35 @@ const PostTagsList = styled.ul`
   justify-content:flex-start;
 `
 
+const PostsGrid = styled.div``
+
+const PostYearTitle = styled.h2`
+  font-weight:500;
+  border-bottom:1px solid #f8f8f8;
+  padding:0 0 1rem;
+  margin:0 0 1rem;
+`
+
 const PostTagsListItem = styled.li`
   &:not(:last-of-type){
     margin-right:1rem;
   }
   button{
-    background-color:#ccc;
     color:#fff;
     padding:0.3rem 0.5rem;
     font-size:0.975rem;
     line-height:1;
     border-radius:3px;
 
+    [data-color-scheme="light"] & {
+      background-color:#ccc;
+    }
+    [data-color-scheme="dark"] & {
+        background:#333;
+    }    
+
     &.active {
-      background-color:${colours.accent}
+      background-color: blue
     }
   }
 `
-
-const PostsGrid = styled.div``

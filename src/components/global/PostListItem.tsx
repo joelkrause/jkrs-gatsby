@@ -29,6 +29,12 @@ const PostItem = styled(props => <Link {...props} />)`
 
     &:hover {
         background:#f8f8f8;
+        [data-color-scheme="light"] & {
+            background:#f8f8f8;
+        }
+        [data-color-scheme="dark"] & {
+            background:#333;
+        }
     }
 
     &:not(:last-of-type){

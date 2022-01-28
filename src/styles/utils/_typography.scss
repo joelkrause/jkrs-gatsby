@@ -4,3 +4,9 @@ body,
 html {
     font-family: 'Outfit', sans-serif;
 }
+
+html {
+    transition: background-color 0.25s;
+    background-color: var(--background-color);
+    color: var(--defaultColor);
+}

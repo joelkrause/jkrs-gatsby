@@ -9,5 +9,13 @@ export const breakpoints = {
 
 export const colours = {
     default:'#333',
-    accent:'#000'
+    accent:'#000',
+    dark:{
+        default:'#fff',
+        accent:'#fff'
+    },
+    light:{
+        default:'#222',
+        accent:'#222'
+    }
 }
