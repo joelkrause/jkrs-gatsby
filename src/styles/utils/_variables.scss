@@ -1,14 +1,27 @@
-:root {
+// Dark Mode
+[data-color-scheme="dark"] {
+    --background-color: #222;
+    --defaultColor: #f8f8f8;
 
-    // Dark Mode
-    &[data-color-scheme="dark"] {
-        --background-color: #222;
-        --defaultColor: #fff;
-    }
+    // Default Button
+    --buttonColor: #fff;
+    --buttonBorder: #fff;
+    --buttonHoverColor: #333;
 
-    // Light Mode
-    &[data-color-scheme="light"] {
-        --background-color: #fff;
-        --defaultColor: #222;
-    }
+    // Check Theme Popup
+    --checkThemeBackground: #444;
+}
+
+// Light Mode
+[data-color-scheme="light"] {
+    --background-color: #fff;
+    --defaultColor: #333;
+
+    // Default Button
+    --buttonColor: #666;
+    --buttonBorder: #666;
+    --buttonHoverColor: #fff;
+
+    // Check Theme Popup
+    --checkThemeBackground: #ececec;
 }

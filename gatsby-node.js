@@ -4,6 +4,7 @@ const path = require('path')
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
   const blogPostTemplate = path.resolve('src/templates/post.tsx')
+  const pageTemplate = path.resolve('src/templates/page.tsx')
   const result = await graphql(`
   query Posts {
     Storyblok {
@@ -12,6 +13,8 @@ exports.createPages = async ({ graphql, actions }) => {
           full_slug
           name
           published_at
+          first_published_at
+          uuid
           content {
             body
             component
@@ -26,6 +29,17 @@ exports.createPages = async ({ graphql, actions }) => {
           }
         }
       }
+      PageItems {
+        items {
+          full_slug
+          name
+          published_at
+          content {
+            body
+            modules
+          }          
+        }
+      }
     }
   }
   `)
@@ -33,6 +47,15 @@ exports.createPages = async ({ graphql, actions }) => {
     createPage({
       path: `${node.full_slug}`,
       component: blogPostTemplate,
+      context: {
+        story: node
+      },
+    })
+  })
+  result.data.Storyblok.PageItems.items.forEach(node => {
+    createPage({
+      path: `${node.full_slug}`,
+      component: pageTemplate,
       context: {
         story: node
       },

@@ -2,9 +2,12 @@ import { PageProps, useStaticQuery, graphql, Link } from 'gatsby';
 import React, {useState} from 'react';
 import _ from 'underscore';
 import styled from 'styled-components'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTimesCircle } from '@fortawesome/free-regular-svg-icons'
 
 import Layout from "../templates/layout"
 import PostListItem from "../components/global/PostListItem"
+import PostGroup from "../components/global/PostGroup"
 import { breakpoints, colours } from '../styles/styled-components/variables';
 
 
@@ -39,9 +42,10 @@ const PostsPage: React.FC<PageProps> = () => {
   }
 
   const groupByYear = (items) => {
-    return _.groupBy(items, function(item) {
-        return new Date(item.published_at).getFullYear();
-    });
+    const group = _.groupBy(items, function(item) {
+        return new Date(item.first_published_at).getFullYear();
+    })
+    return group
   }
 
 const data = useStaticQuery(graphql`
@@ -52,6 +56,7 @@ const data = useStaticQuery(graphql`
           full_slug
           name
           published_at
+          first_published_at
           content {
             body
             component
@@ -96,8 +101,8 @@ const data = useStaticQuery(graphql`
           })}
           {activeTags.length > 0 &&
             <PostTagsListItem>
-              <button type="button" onClick={() => clearTags()}>
-                Clear Filters
+              <button type="button" className="clear" onClick={() => clearTags()}>
+                <FontAwesomeIcon icon={faTimesCircle} />Clear Filters
               </button>
             </PostTagsListItem>
           }                    
@@ -108,17 +113,10 @@ const data = useStaticQuery(graphql`
     <PostsGrid>
       <div className="container">
       {_.map(groupByYear(resultsToShow(data.Storyblok.PostItems.items)),function(items,year){
-      return (
-        <>
-          <PostYearTitle>{year}</PostYearTitle>
-          {resultsToShow(items).map(node => {
         return (
-          <PostListItem post={node} key={node.uuid}/>
+          <PostGroup posts={resultsToShow(items)} heading={year} layout="list" />
         )
       })}
-        </>
-      )
-    })}
       </div>
     </PostsGrid>
   </Layout>
@@ -143,30 +141,32 @@ const PostTagsList = styled.ul`
 
 const PostsGrid = styled.div``
 
-const PostYearTitle = styled.h2`
-  font-weight:500;
-  border-bottom:1px solid #f8f8f8;
-  padding:0 0 1rem;
-  margin:0 0 1rem;
-`
-
 const PostTagsListItem = styled.li`
   &:not(:last-of-type){
     margin-right:1rem;
   }
-  button{
+
+  button {
     color:#fff;
     padding:0.3rem 0.5rem;
     font-size:0.975rem;
     line-height:1;
     border-radius:3px;
+    display:flex;
+    align-items:center;
 
     [data-color-scheme="light"] & {
       background-color:#ccc;
     }
     [data-color-scheme="dark"] & {
         background:#333;
-    }    
+    }
+
+    &.clear{ 
+      svg {
+        margin:0 0.3rem 0 0;
+      }
+    }
 
     &.active {
       background-color: blue

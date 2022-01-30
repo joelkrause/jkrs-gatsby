@@ -1,73 +1,58 @@
 import React, { Component, useState, useEffect } from 'react';
-import {Link, PageProps} from 'gatsby'
+import {Link, PageProps, useStaticQuery, graphql} from 'gatsby'
 import styled from "styled-components"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMoon, faSun } from '@fortawesome/free-regular-svg-icons'
+import { faHouseUser } from '@fortawesome/free-solid-svg-icons'
 
 import { breakpoints, colours } from '../../styles/styled-components/variables';
 
 
-const Header: React.FC<PageProps> = () => {
-    const [theme, setThemeState] = useState('light');
-
-    useEffect(() => {
-        const localStorage = window.localStorage
-        const getPreferredColorScheme = () => {
-            if (window.matchMedia) {
-              if(window.matchMedia('(prefers-color-scheme: dark)').matches){
-                return 'dark';
-              } else {
-                return 'light';
-              }
+const Header = (props) => {
+    const data = useStaticQuery(graphql`
+    query GlobalContent {
+      Storyblok {
+        GlobalcontentItem(id: "global-content", resolve_links:"url") {
+            content {
+                header_nav
             }
-            return 'light';
-        }
-    
-        const initialValue = localStorage.getItem('theme') ? localStorage.getItem('theme') : getPreferredColorScheme()
-        setThemeState(initialValue)
-        
-        document.documentElement.setAttribute("data-color-scheme", theme);
-    });
-    
-    const setTheme = () => {
-        const currentTheme = localStorage.getItem('theme')
-        if(currentTheme === 'dark'){
-            setThemeState('light')
-            localStorage.setItem('theme','light')
-        } else {
-            setThemeState('dark')
-            localStorage.setItem('theme','dark')
-        }
-    }       
+        }     
+      }
+    }
+  `)
+
+  const HeaderNav = data.Storyblok.GlobalcontentItem.content.header_nav
 
     return (
         <HeaderEle>
-        <Logo to="/">
-            Joel Krause
-        </Logo>
-        <NavEle>
-            <NavEleList>
-                <NavEleListItem>
-                    <Link to="/">Home</Link>
-                </NavEleListItem>
-                <NavEleListItem>
-                    <Link to="/posts">Posts</Link>
-                </NavEleListItem>
-            </NavEleList>
-        </NavEle>
-        <ThemeSwitcher>
-            <button  onClick={() => setTheme()} className={theme}>
-                {theme === 'light' &&
-                    <FontAwesomeIcon icon={faSun} />
-                }
-                <span></span>
-                {theme === 'dark' &&
-                    <FontAwesomeIcon icon={faMoon} />
-                }                
-            </button>
-            {theme}
-        </ThemeSwitcher>
-    </HeaderEle>        
+            <NavEle>
+                <NavEleList>
+                    <NavEleListItem>
+                        <Link to="/">
+                            <FontAwesomeIcon icon={faHouseUser} />
+                        </Link>
+                    </NavEleListItem>                    
+                    {HeaderNav.map(node => {
+                    return (
+                        <NavEleListItem>
+                            <Link to={`/${node.link.story ? node.link.story.full_slug : node.link.cached_url}`}>{node.title}</Link>
+                        </NavEleListItem>
+                    )
+                    })}
+                </NavEleList>
+            </NavEle>
+            <ThemeSwitcher>
+                <button onClick={() => props.onThemeSelect()} className={props.theme}>
+                    {props.theme === 'light' &&
+                        <FontAwesomeIcon icon={faSun} />
+                    }
+                    <span></span>
+                    {props.theme === 'dark' &&
+                        <FontAwesomeIcon icon={faMoon} />
+                    }                
+                </button>
+            </ThemeSwitcher>
+        </HeaderEle>        
     )
 }
 
@@ -77,29 +62,30 @@ const HeaderEle = styled.header`
     display:flex;
     align-items:center;
     padding:1rem;
-    font-weight: 500;
 
     @media (min-width: ${breakpoints.xl}) {
         padding:2rem;
     }
     
     @media (min-width: ${breakpoints.xxl}) {
-        padding:3rem;
+        padding:4rem;
         font-size:1.25rem;
     }
-
-    @media (min-width: ${breakpoints.hd}) {
-        padding:4rem;
-    } 
 `
 
 const Logo = styled(props => <Link {...props} />)`
     margin:0 2rem 0 0;
     font-size:1.25rem;
+    font-weight:700;
     
     &:hover {
         text-decoration:underline;
-    }    
+    }
+
+    &:after {
+        content:'|';
+        padding:0 0 0 2rem;
+    }
 `
 
 const NavEle = styled.nav``

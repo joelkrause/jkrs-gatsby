@@ -20,6 +20,7 @@
     "@fortawesome/react-fontawesome": "^0.1.16",
     "@storyblok/storyblok-editable": "^1.1.0",
     "@types/underscore": "^1.11.4",
+    "axios": "^0.21.4",
     "babel-plugin-styled-components": "^2.0.2",
     "date-fns": "^2.28.0",
     "dotenv": "^14.3.2",
@@ -33,6 +34,7 @@
     "react-dom": "^17.0.1",
     "sass": "^1.49.0",
     "storyblok-js-client": "^4.2.0",
+    "storyblok-rich-text-react-renderer": "^2.5.2",
     "styled-components": "^5.3.3",
     "underscore": "^1.13.2"
   },

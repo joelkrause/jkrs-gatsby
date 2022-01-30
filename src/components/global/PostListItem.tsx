@@ -1,19 +1,17 @@
 import React from 'react';
 import {Link} from 'gatsby'
 import styled from 'styled-components'
-import { format, formatDistance } from 'date-fns'
 
-function PostListItem(props) {
-    const post = props.post
 
-    const date = (date: number | Date) => {
-        return formatDistance(new Date(date), new Date(),{ addSuffix: true })
-      }
-
+const PostListItem = ({post}) => {
     return (
         <PostItem to={`/${post.full_slug}`}>
+            {post.content.post_icon &&
+                <PostIcon>
+                    <img src={post.content.post_icon} />
+                </PostIcon>
+            }
             <PostName>{post.name}</PostName>
-            <PostDate>{date(post.published_at)}</PostDate>
       </PostItem>
     );
 }
@@ -22,7 +20,7 @@ export default PostListItem;
 
 const PostItem = styled(props => <Link {...props} />)`
     display:flex;
-    justify-content:space-between;
+    align-items:center;
     padding:1.25rem 1rem;
     border-radius:3px;
     margin: 0 -1rem;
@@ -42,10 +40,20 @@ const PostItem = styled(props => <Link {...props} />)`
     }
 `
 
+const PostIcon = styled.div`
+    padding-right:1rem;
+    img {
+        width:35px;
+        height:auto;
+        display:block;
+    }
+`
+
 const PostName = styled.div`
     font-size:1.25rem;
 `
 
 const PostDate = styled.div`
     color:#ccc;
+    margin-left:auto;
 `
