@@ -8,6 +8,7 @@ lerna-debug.log*
 public/
 .env*
 package-lock.json
+.firebase/
 
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json

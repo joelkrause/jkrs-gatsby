@@ -9,6 +9,7 @@ import { breakpoints, colours } from '../../styles/styled-components/variables';
 
 
 const Header = (props) => {
+    const [isScrolling,setScrolling] = useState(false)
     const data = useStaticQuery(graphql`
     query GlobalContent {
       Storyblok {
@@ -24,7 +25,7 @@ const Header = (props) => {
   const HeaderNav = data.Storyblok.GlobalcontentItem.content.header_nav
 
     return (
-        <HeaderEle>
+        <HeaderEle className={isScrolling ? 'scrolling' : 'not-scrolling'}>
             <NavEle>
                 <NavEleList>
                     <NavEleListItem>

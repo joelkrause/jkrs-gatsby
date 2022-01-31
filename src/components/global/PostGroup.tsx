@@ -3,7 +3,7 @@ import { Link } from 'gatsby';
 import styled from 'styled-components'
 import PostListItem from "./PostListItem"
 
-const PostGroup = ({posts,heading,layout}) => {
+const PostGroup = ({posts,heading,layout,showButton}) => {
     return(
         <PostGroupWrapper>
             <div className="container">
@@ -11,7 +11,9 @@ const PostGroup = ({posts,heading,layout}) => {
                     {heading && 
                         <PostGroupTitle>{heading}</PostGroupTitle>
                     }
-                    <Link className="btn" to="/posts">See All Posts</Link>
+                    {showButton === 'true' &&
+                        <Link className="btn" to="/articles">See All Articles</Link>
+                    }
                 </PostGroupHeader>
                 <PostGroupGrid className={layout}>
                     {posts.map(node => {

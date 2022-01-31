@@ -19,4 +19,6 @@ const Page = ({ pageContext, location }) => {
  
 export default Page
 
-const PageTitle = styled.h1``
+const PageTitle = styled.h1`
+  padding: 2rem 0;
+`

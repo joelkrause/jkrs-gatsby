@@ -8,8 +8,16 @@
     --buttonBorder: #fff;
     --buttonHoverColor: #333;
 
+    // Header
+    --headerBackgroundColor:#333;
+    --headerTextColor:#fff;
+
     // Check Theme Popup
     --checkThemeBackground: #444;
+
+    // Form Styles
+    --inputBackground: #444;
+    --inputColor: #fff;
 }
 
 // Light Mode
@@ -22,6 +30,14 @@
     --buttonBorder: #666;
     --buttonHoverColor: #fff;
 
+    // Header
+    --headerBackgroundColor:#f8f8f8;
+    --headerTextColor:#444;
+
     // Check Theme Popup
     --checkThemeBackground: #ececec;
+
+    // Form Styles
+    --inputBackground: #ececec;
+    --inputColor: #444;
 }

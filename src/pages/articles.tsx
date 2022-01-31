@@ -4,6 +4,7 @@ import _ from 'underscore';
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimesCircle } from '@fortawesome/free-regular-svg-icons'
+import { faSearch } from '@fortawesome/free-solid-svg-icons'
 
 import Layout from "../templates/layout"
 import PostListItem from "../components/global/PostListItem"
@@ -35,7 +36,8 @@ const PostsPage: React.FC<PageProps> = () => {
   const resultsToShow = (items) => {
     if(activeTags.length){
       const posts = [...items]
-      return posts.filter(item => item.content?.categories.some(category => activeTags.includes(category.uuid)))
+      console.log(posts)
+      return posts.filter(item => item.content?.categories.some(category => activeTags.find(el => el.uuid === category.uuid)))
     } else {
       return items
     }
@@ -46,6 +48,13 @@ const PostsPage: React.FC<PageProps> = () => {
         return new Date(item.first_published_at).getFullYear();
     })
     return group
+  }
+
+  const isTagActive = (tag) => {
+    if(activeTags.find(el => el.uuid === tag.uuid)){
+      return true
+    }
+    return false
   }
 
 const data = useStaticQuery(graphql`
@@ -86,14 +95,18 @@ const data = useStaticQuery(graphql`
     <PostsHero>
       <div className="container">
         <PostsTitle>
-          Posts
+          Articles
         </PostsTitle>
+        <PostSearch>
+          <FontAwesomeIcon icon={faSearch} />
+          <input type="text" />
+        </PostSearch>        
         <PostTags>
         <PostTagsList>
           {data.Storyblok.CategoryItems.items.map(node => {
             return (
               <PostTagsListItem>
-                <button type="button" onClick={() => setTags(node)} className={activeTags.includes(node.uuid) ? 'active' : ''}>
+                <button type="button" onClick={() => setTags(node)} className={isTagActive(node) ? 'active' : ''}>
                   {node.name}
                 </button>
               </PostTagsListItem>    
@@ -112,11 +125,11 @@ const data = useStaticQuery(graphql`
     </PostsHero>
     <PostsGrid>
       <div className="container">
-      {_.map(groupByYear(resultsToShow(data.Storyblok.PostItems.items)),function(items,year){
-        return (
-          <PostGroup posts={resultsToShow(items)} heading={year} layout="list" />
-        )
-      })}
+        {_.map(groupByYear(resultsToShow(data.Storyblok.PostItems.items)),function(items,year){
+          return (
+            <PostGroup showButton="false" posts={resultsToShow(items)} heading={year} layout="list" />
+          )
+        })}
       </div>
     </PostsGrid>
   </Layout>
@@ -171,5 +184,30 @@ const PostTagsListItem = styled.li`
     &.active {
       background-color: blue
     }
+  }
+`
+
+const PostSearch = styled.div`
+  display:none;
+  margin:0 0 2.5rem;
+  position: relative;
+  width:50%;
+
+  svg {
+    position:absolute;
+    top:50%;
+    left:15px;
+    z-index:1;
+    transform:translateY(-50%);
+  }
+
+  input {
+    background-color:var(--inputBackground);
+    font-size:1.25rem;
+    color:var(--inputColor);
+    padding:1rem;
+    border-radius:3px;
+    width:100%;
+    padding-left:2.5rem;
   }
 `

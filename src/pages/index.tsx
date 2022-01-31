@@ -57,16 +57,18 @@ const posts = data.Storyblok.PostItems.items
     <Layout>
       <HomeHero>
         <div className="container">
-          <HomeHeroImage>
-            <img src={page.content.hero_image.filename} />
-          </HomeHeroImage>
-          <HomeHeroContent>
-            {render(page.content.hero_content)}
-          </HomeHeroContent>
+          <HomeHeroGrid>
+            <HomeHeroImage>
+              <img src={page.content.hero_image.filename} />
+            </HomeHeroImage>
+            <HomeHeroContent>
+              {render(page.content.hero_content)}
+            </HomeHeroContent>
+          </HomeHeroGrid>
         </div>
       </HomeHero>
-      <PostGroup posts={posts} heading="Featured Posts" layout="featured" />
-      <PostGroup posts={posts} heading="Latest Posts" layout="list"/>
+      <PostGroup showButton="true" posts={posts} heading="Featured Articles" layout="featured" />
+      <PostGroup showButton="true" posts={posts} heading="Latest Articles" layout="list"/>
     </Layout>
   )
 }
@@ -77,19 +79,22 @@ const HomeHero = styled.div`
   @media (min-width: ${breakpoints.xl}) {
     padding:4rem 0;
   }
+`
 
-  .container {
-    @media (min-width: ${breakpoints.xl}) {
-      display:flex;
-      align-items:center;
-    }
+const HomeHeroGrid = styled.div`
+  @media (min-width: ${breakpoints.xl}) {
+    display:flex;
+    align-items:center;
   }
 `
 
 const HomeHeroImage = styled.div`
-  width:50%;
+  min-width:40%;
 `
 
 const HomeHeroContent = styled.div`
   padding-left:5vw;
+  p {
+    line-height:1.5;
+  }
 `
