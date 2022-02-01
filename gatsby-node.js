@@ -35,7 +35,6 @@ exports.createPages = async ({ graphql, actions }) => {
           name
           published_at
           content {
-            body
             modules
           }          
         }

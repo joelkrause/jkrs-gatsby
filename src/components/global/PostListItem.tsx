@@ -80,6 +80,8 @@ const PostTag = styled.div`
     border-radius:3px;
     display:flex;
     align-items:center;
+    flex-wrap:wrap;
+    white-space:nowrap;
 
     [data-color-scheme="light"] & {
       background-color:#ccc;

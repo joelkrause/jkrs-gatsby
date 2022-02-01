@@ -1,3 +1,7 @@
+require("dotenv").config({
+  path: `.env`,
+})
+
 module.exports = {
   plugins: [
     `gatsby-plugin-styled-components`,
@@ -17,8 +21,8 @@ module.exports = {
         typeName: `storyblok`,
         url: `https://gapi.storyblok.com/v1/api`,
         headers: {
-          Token: `sZUcBEZiCUQNtT3CQAZrzgtt`,
-          Version: `draft`,
+          Token: process.env.STORYBLOK_TOKEN,
+          Version: process.env.STORYBLOK_VERSION,
         },
       },
     },
