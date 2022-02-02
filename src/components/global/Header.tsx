@@ -11,16 +11,16 @@ import { breakpoints, colours } from '../../styles/styled-components/variables';
 const Header = (props) => {
     const [isScrolling,setScrolling] = useState(false)
     const data = useStaticQuery(graphql`
-    query GlobalContent {
-      Storyblok {
-        GlobalcontentItem(id: "global-content", resolve_links:"url") {
-            content {
-                header_nav
+        query GlobalContent {
+            Storyblok {
+                GlobalcontentItem(id: "global-content", resolve_links:"url") {
+                    content {
+                        header_nav
+                    }
+                }     
             }
-        }     
-      }
-    }
-  `)
+        }
+    `)
 
   const HeaderNav = data.Storyblok.GlobalcontentItem.content.header_nav
 
@@ -29,9 +29,9 @@ const Header = (props) => {
             <NavEle>
                 <NavEleList>
                     <NavEleListItem>
-                        <Link to="/">
-                            <FontAwesomeIcon icon={faHouseUser} />
-                        </Link>
+                        <Logo to="/">
+                            Joel Krause
+                        </Logo>
                     </NavEleListItem>                    
                     {HeaderNav.map(node => {
                     return (
@@ -75,7 +75,6 @@ const HeaderEle = styled.header`
 `
 
 const Logo = styled(props => <Link {...props} />)`
-    margin:0 2rem 0 0;
     font-size:1.25rem;
     font-weight:700;
     

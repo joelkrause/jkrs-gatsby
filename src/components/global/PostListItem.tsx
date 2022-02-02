@@ -15,7 +15,7 @@ const PostListItem = ({post}) => {
             <PostTags>
                 {post.content.categories.map(node => {
                     return (
-                        <PostTag>
+                        <PostTag key={node.uuid}>
                             {node.name}
                         </PostTag>
                     )

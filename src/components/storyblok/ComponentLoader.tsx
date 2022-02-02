@@ -4,15 +4,15 @@ import React from 'react';
 import ContentBlock from './ContentBlock';
 
 const Components = {
-    'content_block': ContentBlock,
-  }
+  'content_block': ContentBlock,
+}
 
 const ComponentLoader = ({blok}) => {
    if (typeof Components[blok.component] !== 'undefined') {
      const Component = Components[blok.component]
      return (<div><Component blok={blok} /></div>)
    }
-   return (<p>The component <strong>{blok.component}</strong> has not been created yet.</p>)        
+   return null
 };
 
 export default ComponentLoader;

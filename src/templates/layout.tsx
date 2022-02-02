@@ -1,4 +1,5 @@
 import React, {useState, useEffect } from 'react';
+import styled from 'styled-components'
 
 import '../styles/app.scss'
 import Header from "../components/global/Header"
@@ -10,6 +11,7 @@ const Layout = ({children}) => {
   const [changedColorScheme, setUserColorSchemePreference] = useState('');
 
   useEffect(() => {
+    console.log('useEffect on layout.tsx')
       const localStorage = window.localStorage
       const getPreferredColorScheme = () => {
           if (window.matchMedia) {
@@ -25,15 +27,15 @@ const Layout = ({children}) => {
       const initialValue = localStorage.getItem('theme') ? localStorage.getItem('theme') : getPreferredColorScheme()
       setThemeState(initialValue)
 
-      document.documentElement.setAttribute("data-color-scheme",theme)
-
       window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
         const newColorScheme = event.matches ? "dark" : "light";
         console.log('newColorScheme: ',newColorScheme)
         setUserColorSchemePreference(newColorScheme)
         toggleThemePopup(true)
-    });      
-  });
+    });
+
+    // document.documentElement.setAttribute("data-color-scheme",theme)
+  }, []);
   
   const setTheme = () => {
     console.log('we hit the parent!')
@@ -41,9 +43,11 @@ const Layout = ({children}) => {
       if(currentTheme === 'dark'){
           setThemeState('light')
           localStorage.setItem('theme','light')
+          // document.documentElement.setAttribute("data-color-scheme",'light')
       } else {
           setThemeState('dark')
           localStorage.setItem('theme','dark')
+          // document.documentElement.setAttribute("data-color-scheme",'dark')
       }
       toggleThemePopup(false)
   }
@@ -53,14 +57,21 @@ const Layout = ({children}) => {
   }
 
   return (
-    <main>
+    <Main data-color-scheme={theme}>
       <Header theme={theme} onThemeSelect={setTheme} />
       <main>{children}</main>
 
       {showThemePopup &&
         <CheckTheme color={changedColorScheme} onClose={closePopup} changeScheme={setTheme}/>
       }
-    </main>
+    </Main>
   )
 }
 export default Layout
+
+const Main = styled.main`
+    transition: background-color 0.25s;
+    background-color: var(--background-color);
+    color: var(--defaultColor);
+    min-height:100vh;
+`

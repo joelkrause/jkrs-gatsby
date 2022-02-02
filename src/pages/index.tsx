@@ -54,7 +54,7 @@ const page = data.Storyblok.HomeItem
 const posts = data.Storyblok.PostItems.items
 
   return (
-    <Layout>
+    <>
       <HomeHero>
         <div className="container">
           <HomeHeroGrid>
@@ -67,9 +67,9 @@ const posts = data.Storyblok.PostItems.items
           </HomeHeroGrid>
         </div>
       </HomeHero>
-      <PostGroup showButton="true" posts={posts} heading="Featured Articles" layout="featured" />
-      <PostGroup showButton="true" posts={posts} heading="Latest Articles" layout="list"/>
-    </Layout>
+      <PostGroup key="featured" showButton="true" posts={posts} heading="Featured Articles" layout="featured" />
+      <PostGroup key="list" showButton="true" posts={posts} heading="Latest Articles" layout="list"/>
+    </>
   )
 }
 

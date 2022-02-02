@@ -30,7 +30,7 @@ const PostGroup = ({posts,heading,layout,showButton}) => {
 export default PostGroup;
 
 const PostGroupWrapper = styled.div`
-  margin:3rem 0;
+  padding:3rem 0;
 `
 
 const PostGroupHeader = styled.header`

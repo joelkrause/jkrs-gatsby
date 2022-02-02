@@ -9,16 +9,16 @@ import ComponentLoader from "../components/storyblok/ComponentLoader"
 const Page = ({ pageContext, location }) => { 
   let story = pageContext.story
   
-  const components = story.content.modules.map(blok => {
+  const components = story.content.modules?.map(blok => {
     return (<ComponentLoader blok={blok} key={blok._uid} />)
   })
   return (
-  <Layout>
+  <>
       <div className="container">
           <PageTitle>{story.name}</PageTitle>
           {components}
       </div>
-  </Layout>
+  </>
 )}
  
 export default Page

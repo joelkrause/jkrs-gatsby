@@ -91,7 +91,7 @@ const data = useStaticQuery(graphql`
 `)
 
   return (
-  <Layout>
+  <>
     <PostsHero>
       <div className="container">
         <PostsTitle>
@@ -105,7 +105,7 @@ const data = useStaticQuery(graphql`
         <PostTagsList>
           {data.Storyblok.CategoryItems.items.map(node => {
             return (
-              <PostTagsListItem>
+              <PostTagsListItem key={node.uuid}>
                 <button type="button" onClick={() => setTags(node)} className={isTagActive(node) ? 'active' : ''}>
                   {node.name}
                 </button>
@@ -127,12 +127,12 @@ const data = useStaticQuery(graphql`
       <div className="container">
         {_.map(groupByYear(resultsToShow(data.Storyblok.PostItems.items)),function(items,year){
           return (
-            <PostGroup showButton="false" posts={resultsToShow(items)} heading={year} layout="list" />
+            <PostGroup key={year} showButton="false" posts={resultsToShow(items)} heading={year} layout="list" />
           )
         })}
       </div>
     </PostsGrid>
-  </Layout>
+  </>
   )
 }
 

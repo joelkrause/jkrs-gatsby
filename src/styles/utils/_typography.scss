@@ -12,12 +12,6 @@ html {
     text-shadow: rgba(0, 0, 0, 0.01) 0 0 1px;
 }
 
-html {
-    transition: background-color 0.25s;
-    background-color: var(--background-color);
-    color: var(--defaultColor);
-}
-
 p {
     font-size: 1.25rem;
 }

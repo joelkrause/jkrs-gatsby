@@ -26,7 +26,10 @@ const Page = ({ pageContext, location }) => {
     useEffect(() => {
         const localStorage = window.localStorage
         if(localStorage.getItem('user-likes')){
-            setStateValue('usersLikes', localStorage.getItem('user-likes').split(','))
+            setStateValue('usersLikes', [...localStorage.getItem('user-likes').split(',')])
+            if([...localStorage.getItem('user-likes').split(',')].includes(story.uuid)){
+                setStateValue('disableLike',true)
+            }
         }
         axios.post(`${process.env.GATSBY_FIREBASE}/getLikes`,{post:story.uuid}).then(res => {
             if(res.data.likes){
@@ -43,7 +46,6 @@ const Page = ({ pageContext, location }) => {
             setStateValue('likes',res.data.likes)
             if(!state.usersLikes.includes(story.uuid)){
                 const likes = [...state.usersLikes, story.uuid]
-                console.log(likes)
                 setStateValue('usersLikes',likes)
                 localStorage.setItem('user-likes',likes.join(','))
             }
@@ -56,14 +58,10 @@ const Page = ({ pageContext, location }) => {
     }
 
     const setStateValue = (id,value) => {
-        console.log(id)
-        console.log(value)
-        console.log(JSON.stringify(state,null,2))
-        setState({
-            ...state,
+        setState(prevState => ({
+            ...prevState,
             [id]: value,
-        });
-        console.log(JSON.stringify(state,null,2))
+        }))
     }
 
     const date = (date: number | Date) => {
@@ -71,7 +69,7 @@ const Page = ({ pageContext, location }) => {
     }
  
     return (
-        <Layout>
+        <>
             <PostHero>
                 <div className="container">
                     {story.content.post_icon && 
@@ -87,7 +85,6 @@ const Page = ({ pageContext, location }) => {
                     {story.content.excerpt && 
                         <PostExcerpt>{render(story.content.excerpt)}</PostExcerpt>
                     }
-                    <pre>{JSON.stringify(state,null,2)}</pre>
                 </div>
                 {story.content.post_hero && 
                     <div className="container--large">
@@ -102,8 +99,7 @@ const Page = ({ pageContext, location }) => {
                     {render(story.content.body)}
                 </div>
             </PostContent>
-            <pre>{JSON.stringify(story,null,2)}</pre>
-        </Layout>
+        </>
     )
 }
  
