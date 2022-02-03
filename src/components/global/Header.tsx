@@ -30,7 +30,7 @@ const Header = (props) => {
                 <NavEleList>
                     <NavEleListItem>
                         <Logo to="/">
-                            Joel Krause
+                            J.
                         </Logo>
                     </NavEleListItem>                    
                     {HeaderNav.map(node => {
