@@ -26,13 +26,11 @@ const Header = (props) => {
 
     return (
         <HeaderEle className={isScrolling ? 'scrolling' : 'not-scrolling'}>
+            <Logo to="/">
+                Joel <br />Krause.
+            </Logo>
             <NavEle>
-                <NavEleList>
-                    <NavEleListItem>
-                        <Logo to="/">
-                            J.
-                        </Logo>
-                    </NavEleListItem>                    
+                <NavEleList>                  
                     {HeaderNav.map(node => {
                     return (
                         <NavEleListItem>
@@ -76,16 +74,11 @@ const HeaderEle = styled.header`
 
 const Logo = styled(props => <Link {...props} />)`
     font-size:1.25rem;
+    text-transform:uppercase;
+    font-family:'Syncopate',sans-serif;
     font-weight:700;
-    
-    &:hover {
-        text-decoration:underline;
-    }
-
-    &:after {
-        content:'|';
-        padding:0 0 0 2rem;
-    }
+    letter-spacing:1px;
+    margin:0 4rem 0 0;
 `
 
 const NavEle = styled.nav``

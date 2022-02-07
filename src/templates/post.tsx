@@ -19,8 +19,6 @@ const Page = ({ pageContext, location }) => {
         disableLike:false
     })
 
-    // const [state, dispatch] = useReducer(reducer, initialState);
-
     let story = pageContext.story
 
     useEffect(() => {

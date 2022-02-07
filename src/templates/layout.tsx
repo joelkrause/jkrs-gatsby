@@ -3,6 +3,7 @@ import styled from 'styled-components'
 
 import '../styles/app.scss'
 import Header from "../components/global/Header"
+import Footer from "../components/global/Footer"
 import CheckTheme from "../components/global/CheckTheme"
 
 const Layout = ({children}) => {
@@ -60,6 +61,7 @@ const Layout = ({children}) => {
     <Main data-color-scheme={theme}>
       <Header theme={theme} onThemeSelect={setTheme} />
       <main>{children}</main>
+      <Footer />
 
       {showThemePopup &&
         <CheckTheme color={changedColorScheme} onClose={closePopup} changeScheme={setTheme}/>
