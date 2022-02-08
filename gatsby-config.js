@@ -6,6 +6,16 @@ module.exports = {
   plugins: [
     `gatsby-plugin-styled-components`,
     `gatsby-plugin-sass`,
+    `gatsby-plugin-image`,
+    `gatsby-plugin-sharp`,
+    `gatsby-transformer-sharp`,
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `images`,
+        path: `${__dirname}/src/images`,
+      },
+    },
     {
       resolve: `gatsby-plugin-typescript`,
       options: {
@@ -25,7 +35,7 @@ module.exports = {
           Version: process.env.STORYBLOK_VERSION,
         },
       },
-    },
+    }
     // {
     //   resolve: "gatsby-plugin-prettier-eslint",
     //   options: {

@@ -10,6 +10,19 @@ import { breakpoints, colours } from '../../styles/styled-components/variables';
 
 const Header = (props) => {
     const [isScrolling,setScrolling] = useState(false)
+
+    useEffect(() => {
+        window.addEventListener('scroll', () => {
+            const scrollPos = window.pageYOffset
+
+            if (scrollPos >= 150) {
+                setScrolling(true)
+            } else {
+                setScrolling(false)
+            }
+        })
+    }, [])
+
     const data = useStaticQuery(graphql`
         query GlobalContent {
             Storyblok {
@@ -21,8 +34,7 @@ const Header = (props) => {
             }
         }
     `)
-
-  const HeaderNav = data.Storyblok.GlobalcontentItem.content.header_nav
+    const HeaderNav = data.Storyblok.GlobalcontentItem.content.header_nav
 
     return (
         <HeaderEle className={isScrolling ? 'scrolling' : 'not-scrolling'}>
@@ -58,17 +70,36 @@ const Header = (props) => {
 export default Header;
 
 const HeaderEle = styled.header`
-    display:flex;
-    align-items:center;
-    padding:1rem;
+    position: sticky;
+    top: 0;
+    display: flex;
+    align-items: center;
+    background-color: var(--background-color);
+    transition: padding 0.35s;
 
-    @media (min-width: ${breakpoints.xl}) {
-        padding:2rem;
+    &.not-scrolling {
+        padding:1rem;
+
+        @media (min-width: ${breakpoints.xl}) {
+            padding:2rem;
+        }
+
+        @media (min-width: ${breakpoints.xxl}) {
+            padding:4rem;
+            font-size:1.25rem;
+        }
     }
-    
-    @media (min-width: ${breakpoints.xxl}) {
-        padding:4rem;
-        font-size:1.25rem;
+
+    &.scrolling {
+        padding:1rem;
+
+        @media (min-width: ${breakpoints.xl}) {
+            padding:2rem;
+        }
+
+        @media (min-width: ${breakpoints.xxl}) {
+            padding:1rem;
+        }        
     }
 `
 
@@ -94,10 +125,33 @@ const NavEleListItem = styled.li`
         margin:0 2rem 0 0;
     }
     a {
+        position:relative;
         text-decoration:none;
+
+        &:after {
+            content:'';
+            width:5px;
+            height:5px;
+            display:block;
+            position:absolute;
+            top:calc(100% + 10px);
+            left:50%;
+            background-color:#fff;
+            border-radius:50%;
+            opacity:0;
+            transform: translate(-50%,10px);
+            transition: all 0.35s;
+        }
         
-        &:hover,&[aria-current="page"] {
+        &:hover {
             text-decoration:underline;
+        }
+
+        &[aria-current="page"] {
+            &:after {
+                opacity:1;
+                transform:translate(-50%,0)
+            }
         }
     }
 `

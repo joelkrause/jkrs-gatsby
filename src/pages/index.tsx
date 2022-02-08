@@ -16,7 +16,7 @@ const IndexPage: React.FC<PageProps> = () => {
         name
         content {
           hero_content
-          hero_image {
+          hero_image {      
             filename
             copyright
             alt
